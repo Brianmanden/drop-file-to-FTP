@@ -23,9 +23,7 @@
 
         <ListView Grid.Column="0" Name="list" Margin="250,50,10,20" HorizontalContentAlignment="Stretch"
                   AllowDrop="True"
-                  DragDrop.Drop="list_Drop"
-                  DragDrop.DragEnter="list_DragEnter"
-                  MouseDoubleClick="list_MouseDoubleClick">
+                  DragDrop.Drop="list_Drop">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="290" Header="Filename" DisplayMemberBinding="{Binding Path=Filename}" />
