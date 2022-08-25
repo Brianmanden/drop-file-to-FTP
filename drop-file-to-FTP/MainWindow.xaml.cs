@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -54,6 +55,10 @@ namespace drop_file_to_FTP
                     debugTextBox.Text = "File(s) dropped:" + Environment.NewLine;
                     string[] droppedFilesPaths = e.Data.GetData(DataFormats.FileDrop, true) as string[];
 
+                    var filesToUpload = new List<FileObj>();
+                    fileList.ItemsSource = filesToUpload;
+
+                    #region Upload files
                     using (var client = new WebClient())
                     {
                         string FTPURI = splitCredentials[0] + ":" + splitCredentials[1];
@@ -61,10 +66,12 @@ namespace drop_file_to_FTP
                         foreach (var filePath in droppedFilesPaths)
                         {
                             string filename = filePath.Split("\\").Last();
+                            filesToUpload.Add(new FileObj() { Filename = filename, FilePath = filePath, UploadProgress = 0 });
                             debugTextBox.Text += filename + Environment.NewLine;
                             client.UploadFile("ftp://" + FTPURI + "/" + filename, WebRequestMethods.Ftp.UploadFile, filePath);
                         }
                     }
+                    #endregion
                 }
             }
         }

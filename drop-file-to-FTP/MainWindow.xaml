@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="650">
     <Grid>
+
+        <!--#region Credential fields -->
         <Label x:Name="labelHostname" Content="Hostname" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="hostname" HorizontalAlignment="Left" Margin="30,35,0,0" TextWrapping="Wrap" Text="ie. ftp.example.com" VerticalAlignment="Top" Width="160"/>
 
@@ -18,19 +20,21 @@
 
         <Label Content="Password" HorizontalAlignment="Left" Margin="30,160,0,0" VerticalAlignment="Top"/>
         <PasswordBox x:Name="password" HorizontalAlignment="Left" Margin="30,185,0,0" VerticalAlignment="Top" Width="160"/>
+        <!--#endregion-->
 
+        <!--#region File Queue -->
         <Label x:Name="labelFileQueue" Content="Drop files below to upload to FTP server" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top"/>
-
-        <ListView Grid.Column="0" Name="list" Margin="250,50,10,20" HorizontalContentAlignment="Stretch"
+        <ListView Grid.Column="0" Name="fileList" Margin="250,50,10,20" HorizontalContentAlignment="Stretch"
                   AllowDrop="True"
                   DragDrop.Drop="list_Drop">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="290" Header="Filename" DisplayMemberBinding="{Binding Path=Filename}" />
-                    <GridViewColumn Width="60" Header="Progress" />
+                    <GridViewColumn Width="60" Header="UploadProgress" DisplayMemberBinding="{Binding Path=UploadProgress}" />
                 </GridView>
             </ListView.View>
         </ListView>
+        <!--#endregion-->
 
         <Button x:Name="saveConfig" Content="Save" HorizontalAlignment="Left" Margin="30,220,0,0" VerticalAlignment="Top" Click="saveConfig_Click"/>
         
