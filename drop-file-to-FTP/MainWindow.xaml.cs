@@ -15,9 +15,11 @@ namespace drop_file_to_FTP
         public MainWindow()
         {
             InitializeComponent();
+            uploadDirectory.Text = uploadDirectoryDefaultText; 
         }
 
         private string credentialsFilePath = "./credentials.cfg";
+        private string uploadDirectoryDefaultText = "ie. uploads";
 
         private void saveConfig_Click(object sender, RoutedEventArgs e)
         {
@@ -68,7 +70,12 @@ namespace drop_file_to_FTP
                             string filename = filePath.Split("\\").Last();
                             filesToUpload.Add(new FileObj() { Filename = filename, FilePath = filePath, UploadProgress = 0 });
                             debugTextBox.Text += filename + Environment.NewLine;
-                            client.UploadFile("ftp://" + FTPURI + "/" + filename, WebRequestMethods.Ftp.UploadFile, filePath);
+
+                            string ftpAddress = uploadDirectory.Text == uploadDirectoryDefaultText ?
+                                                                        "ftp://" + FTPURI + "/" + filename :
+                                                                        "ftp://" + FTPURI + "/" + uploadDirectory.Text + "/" + filename;
+
+                            client.UploadFile(ftpAddress, WebRequestMethods.Ftp.UploadFile, filePath);
                         }
                     }
                     #endregion
